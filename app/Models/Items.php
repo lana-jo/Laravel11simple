@@ -13,10 +13,9 @@ class Items extends Model
         'image',
         'stock',
     ];
-
-    // Relasi dengan Category
-    public function categories()
+    public function category()
     {
-        return $this->belongsTo(Categories::class);
+        return $this->belongsTo(Categories::class, 'category_id');
     }
+ 
 }

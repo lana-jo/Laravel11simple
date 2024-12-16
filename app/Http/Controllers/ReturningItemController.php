@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Returning_item;
 use Illuminate\Http\Request;
-use App\Models\Borrowing_Item;
+use App\Models\BorrowingItem;
 
 
 class ReturningItemController extends Controller
@@ -14,7 +14,7 @@ class ReturningItemController extends Controller
      */
     public function edit($id)
     {
-        $returning = Borrowing_item::with(['rental', 'rental.item'])->findOrFail($id);
+        $returning = BorrowingItem::with(['rental', 'rental.item'])->findOrFail($id);
         return view('returnings.edit', compact('returning'));
     }
     
@@ -50,7 +50,7 @@ class ReturningItemController extends Controller
     public function destroy($id)
     {
         try {
-            $returning = Borrowing_item::findOrFail($id);
+            $returning = BorrowingItem::findOrFail($id);
             
             \DB::transaction(function() use ($returning) {
                 $returning->delete();
@@ -71,7 +71,7 @@ class ReturningItemController extends Controller
     public function index()
     {
         //
-        $borrowings = Borrowing_item::where('status', 'borrowed')->get();
+        $borrowings = BorrowingItem::where('status', 'borrowed')->get();
 
         return view('returnings.index', compact('borrowings'));
     }
@@ -126,7 +126,7 @@ class ReturningItemController extends Controller
 
     public function returnItem($borrowing_id)
     {
-        $borrowing = Borrowing_item::findOrFail($borrowing_id); // Menggunakan model Borrowing_item
+        $borrowing = BorrowingItem::findOrFail($borrowing_id); // Menggunakan model BorrowingItem
         $borrowing->status = 'returned'; // Memperbarui status
         $borrowing->save();
 

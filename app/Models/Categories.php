@@ -3,56 +3,42 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Categories extends Model
 {
-    //
     protected $fillable = [
         'category_name',
     ];
+
     /**
-     * Mendapatkan kategori berdasarkan ID.
+     * Get items associated with this category
      * 
-     * Fungsi ini mengembalikan query SQL untuk mendapatkan kategori dengan ID tertentu.
-     *
-     * @param int $id ID dari kategori yang ingin didapatkan.
-     * 
-     * @return string Query SQL untuk mengambil kategori.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function get_categories_by_id($id)
+    public function items(): HasMany
     {
-        $query = "SELECT * FROM categories WHERE id = $id order by category_name ASC";
-        $result = \DB::select($query);
-        if(count($result) > 0){
-            return $result;
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal mengambil kategori',
-            ], 400);
-        }
+        return $this->hasMany(Items::class, 'category_id');
     }
 
     /**
-     * Mendapatkan kategori berdasarkan ID menggunakan eloquent.
+     * Get category by ID
      * 
-     * Fungsi ini mencari kategori dalam database berdasarkan ID dan mengembalikan objek pertama yang ditemukan.
-     *
-     * @param int $id ID dari kategori yang ingin didapatkan.
-     * 
-     * @return \Illuminate\Database\Eloquent\Model|null Kategori yang ditemukan atau null jika tidak ada.
-     * 
+     * @param int $id
+     * @return Categories|null
      */
-    public function getById($id)
+    public function findCategory($id)
     {
-        $category = $this->where('id', $id)->first();
-        if(!$category){
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal mengambil kategori',
-            ], 400);
-        }
-        return $category;
+        return $this->find($id);
     }
 
+    /**
+     * Get all categories ordered by name
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllCategories()
+    {
+        return $this->orderBy('category_name', 'asc')->get();
+    }
 }

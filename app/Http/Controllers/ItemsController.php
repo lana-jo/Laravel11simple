@@ -8,12 +8,15 @@ use Illuminate\Http\Request;
 
 class ItemsController extends Controller
 {
+
+    
+
     public function index()
     {
-        $items = Items::join('categories', 'items.category_id', '=', 'categories.id')
-            ->select('items.*', 'categories.category_name')
-            ->get();
-        
+        // $items = Items::join('categories', 'items.category_id', '=', 'categories.id')
+        //     ->select('items.*', 'categories.category_name')
+        //     ->get();
+        $items = Items::with('category')->get();
         return view('items.index', compact('items'));
     }
 
@@ -31,9 +34,30 @@ class ItemsController extends Controller
         // Implementation for showing single item
     }
 
-    public function destroy(Items $items)
+    public function destroy($id)
     {
-        // Implementation for deleting item
+        try {
+            $item = Items::findOrFail($id);
+            
+            // Delete associated image if exists
+            if ($item->image) {
+                \Storage::disk('public')->delete($item->image);
+            }
+            
+            \DB::transaction(function() use ($item) {
+                $item->delete();
+            });
+
+            return redirect()
+                ->route('items.index')
+                ->with('success', 'Data berhasil dihapus!');
+                
+        } catch (\Exception $e) {
+            \Log::error('Error deleting item: ' . $e->getMessage());
+            return redirect()
+                ->back()
+                ->with('error', 'Terjadi kesalahan saat menghapus data.');
+        }
     }
 
     public function edit($id)
@@ -92,6 +116,7 @@ public function store(Request $request)
             ->with('error', 'Terjadi kesalahan saat menyimpan data.');
     }
 }
+
 
     
     public function update(Request $request, $id)

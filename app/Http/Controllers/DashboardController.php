@@ -12,5 +12,6 @@ class DashboardController extends Controller
         $totalItems = Items::count();
         $totalBorrowings = Borrowing_item::count();
         return view('dashboard', compact('totalItems', 'totalBorrowings'));
+        
     }
 }

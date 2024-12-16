@@ -38,7 +38,17 @@
                 @foreach($items ?? [] as $item)
                 <div class="bg-white/10 backdrop-blur-lg rounded-xl p-6 transform hover:scale-105 transition duration-300 border border-gray-700">
                     <div class="aspect-w-16 aspect-h-9 mb-4">
-                        <img src="{{ $item->image_url ?? 'https://via.placeholder.com/300' }}" class="object-cover rounded-lg w-full h-48" alt="Item">
+                    @if($item->image)
+                                        <img src="{{ asset('storage/'.$item->image) }}" 
+                                             alt="{{ $item->name }}" 
+                                             class="rounded-3 shadow-sm img-preview">
+                                    @else
+                                        <div class="no-image-placeholder">
+                                            <!-- <i class="fas fa-image text-muted"></i> -->
+                                             <img src="https://via.placeholder.com/300" class="object-cover rounded-lg w-full h-48" alt="Item">
+                                        </div>
+                    @endif
+                        <!-- <img src="{{ $item->image_url ?? 'https://via.placeholder.com/300' }}" class="object-cover rounded-lg w-full h-48" alt="Item"> -->
                     </div>
                     <h3 class="text-xl font-semibold text-white mb-2">{{ $item->name ?? 'Item Name' }}</h3>
                     <p class="text-gray-400 mb-4">{{ $item->description ?? 'Item description goes here' }}</p>

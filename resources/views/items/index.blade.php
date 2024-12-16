@@ -34,7 +34,7 @@
                                     @if($item->image)
                                         <img src="{{ asset('storage/'.$item->image) }}" 
                                              alt="{{ $item->name }}" 
-                                             class="rounded-3 shadow-sm img-preview">
+                                             class="rounded-3 shadow-sm img-preview" width="100" height="100">
                                     @else
                                         <div class="no-image-placeholder">
                                             <i class="fas fa-image text-muted"></i>
@@ -46,7 +46,7 @@
                                 <td>
                                     <span class="badge rounded-pill bg-primary">
                                         
-                                        {{ $item->category->name ?? 'Tiak ada Data' }}
+                                        {{ $item->category->category_name ?? 'Tiak ada Data' }}
                                     </span>
                                 </td>
                                 <td>{{ Str::limit($item->description, 50) }}</td>
@@ -96,28 +96,42 @@
     .bg-gradient-primary {
         background: linear-gradient(45deg, #4e73df, #224abe);
     }
-    
-    .img-preview {
-        width: 80px;
-        height: 80px;
+    /* .img-preview {
+        width: 48px;
+        height: 48px;
         object-fit: cover;
         transition: transform 0.2s;
-    }
-    
+    } */
+    .img-preview {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    transition: transform 0.2s;
+}
+
     .img-preview:hover {
         transform: scale(1.1);
     }
     
-    .no-image-placeholder {
-        width: 80px;
-        height: 80px;
+    /* .no-image-placeholder {
+        width: 48px;
+        height: 48px;
         display: flex;
         align-items: center;
         justify-content: center;
         background-color: #f8f9fa;
         border-radius: 0.5rem;
-    }
-    
+    } */
+    .no-image-placeholder {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+}
+
     .no-image-placeholder i {
         font-size: 2rem;
     }        height: 80px;
@@ -143,7 +157,64 @@
     
     .table th {
         font-weight: 600;
-        text-transform: uppercase;
+    }
+
+    td {
+        vertical-align: middle;
+    }
+
+    .d-flex {
+        display: flex;
+    }
+
+    .justify-content-center {
+        justify-content: center;
+    }
+
+    .gap-2 {
+        gap: 0.5rem;
+    }
+
+    .btn {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        border-radius: 0.2rem;
+    }
+
+    .btn-warning {
+        color: #212529;
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+
+    .btn-danger {
+        color: #fff;
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .rounded-pill {
+        border-radius: 50rem !important;
+    }
+
+    .d-none {
+        display: none !important;
+    }        text-transform: uppercase;
         font-size: 0.85rem;
         letter-spacing: 0.5px;
     }
@@ -181,6 +252,12 @@ document.querySelectorAll('.delete-form').forEach(form => {
         }
     });
 });
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+});
 </script>
 @endpush
 @endsection
+
