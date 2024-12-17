@@ -14,7 +14,7 @@ class BorrowingItemController extends Controller
     public function index()
     {
         //
-        $borrowings = Borrowing_items::all(); // Mengambil semua data peminjaman
+        $borrowings = Borrowing_item::all(); // Mengambil semua data peminjaman
         return view('borrowings.index', compact('borrowings')); // Menampilkan daftar peminjaman ke view
     }
 

@@ -80,8 +80,8 @@ public function store(Request $request)
             'image',
             'mimes:jpeg,png,jpg',
             'max:2048',
-            'dimensions:max_width=48,max_height=48'
-            // 'dimensions:min_width=100,min_height=100,max_width=4000,max_height=4000'
+            // 'dimensions:max_width=48,max_height=48'
+            'dimensions:min_width=100,min_height=100,max_width=4000,max_height=4000'
         ]
     ]);
 
