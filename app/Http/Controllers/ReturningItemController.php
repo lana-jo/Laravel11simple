@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Returning_item;
 use Illuminate\Http\Request;
-use App\Models\BorrowingItem;
+use App\Models\Borrowing_item;
 
 
 class ReturningItemController extends Controller
@@ -14,7 +14,7 @@ class ReturningItemController extends Controller
      */
     public function edit($id)
     {
-        $returning = BorrowingItem::with(['rental', 'rental.item'])->findOrFail($id);
+        $returning = Borrowing_item::with(['rental', 'rental.item'])->findOrFail($id);
         return view('returnings.edit', compact('returning'));
     }
     
@@ -28,7 +28,7 @@ class ReturningItemController extends Controller
         ]);
     
         try {
-            $returning = Returnings::findOrFail($id);
+            $returning = Returning_item::findOrFail($id);
             
             \DB::transaction(function() use ($returning, $validated) {
                 $returning->update($validated);
@@ -50,7 +50,7 @@ class ReturningItemController extends Controller
     public function destroy($id)
     {
         try {
-            $returning = BorrowingItem::findOrFail($id);
+            $returning = Returning_item::findOrFail($id);
             
             \DB::transaction(function() use ($returning) {
                 $returning->delete();
@@ -70,8 +70,7 @@ class ReturningItemController extends Controller
     
     public function index()
     {
-        //
-        $borrowings = BorrowingItem::where('status', 'borrowed')->get();
+        $borrowings = Borrowing_item::where('status', 'borrowed')->get();
 
         return view('returnings.index', compact('borrowings'));
     }
@@ -126,12 +125,10 @@ class ReturningItemController extends Controller
 
     public function returnItem($borrowing_id)
     {
-        $borrowing = BorrowingItem::findOrFail($borrowing_id); // Menggunakan model BorrowingItem
-        $borrowing->status = 'returned'; // Memperbarui status
+        $borrowing = Returning_item::findOrFail($borrowing_id);
+        $borrowing->status = 'returned';
         $borrowing->save();
 
         return redirect()->route('returnings.index')->with('success', 'Barang telah dikembalikan.');
     }
-
-
 }

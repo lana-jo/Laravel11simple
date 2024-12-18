@@ -44,19 +44,19 @@
                                 </td>
                                 <td class="fw-bold">{{ $item->name }}</td>
                                 <td>
-                                    <span class="badge rounded-pill bg-primary">
+                                    <span class="badge rounded-pill bg-primary text-white">
                                         
                                         {{ $item->category->category_name ?? 'Tiak ada Data' }}
                                     </span>
                                 </td>
                                 <td>{{ Str::limit($item->description, 50) }}</td>
                                 <td>
-                                    <span class="badge rounded-pill {{ $item->stock > 0 ? 'bg-success' : 'bg-danger' }}">
+                                    <span class="badge rounded-pill text-white {{ $item->stock > 0 ? 'bg-success' : 'bg-danger' }}">
                                         {{ $item->stock }} unit
                                     </span>
                                 </td>
                                 <td>
-                                    <div class="d-flex justify-content-center gap-2">
+                                    <div class="d-flex justify-content-center gap-2 ">
                                         <a href="{{ route('items.edit', $item->id) }}" 
                                            class="btn btn-warning btn-sm rounded-pill">
                                             <i class="fas fa-edit"></i>

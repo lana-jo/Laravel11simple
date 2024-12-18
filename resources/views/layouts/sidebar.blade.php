@@ -17,6 +17,15 @@
 
     <hr class="sidebar-divider">
 
+    <!-- Menu Pengguna -->
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('users.index') }}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Users</span>
+        </a>
+    </li>
+
     <!-- Menu Kategori -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('categories.index') }}">
